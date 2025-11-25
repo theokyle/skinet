@@ -1,29 +1,14 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from "./layout/header/header";
-import { HttpClient } from '@angular/common/http';
-import { Product } from './shared/models/product';
-import { Pagination } from './shared/models/pagination';
+import { Shop } from "./features/shop/shop";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header],
+  imports: [RouterOutlet, Header, Shop],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit {
-  
-
-  protected readonly baseUrl = 'http://localhost:5000/api/'
-  private http = inject(HttpClient)
+export class App {
   protected readonly title = "SkiNet"
-  protected products: Product[] = [];
-
-  ngOnInit(): void {
-      this.http.get<Pagination<Product>>(this.baseUrl + 'products').subscribe({
-        next: response => this.products = response.data,
-        error: error => console.log(error),
-        complete: () => console.log('complete')
-      })
-    }
 }

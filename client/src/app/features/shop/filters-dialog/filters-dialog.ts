@@ -1,0 +1,35 @@
+import { Component, inject } from '@angular/core';
+import { ShopService } from '../../../core/services/shop';
+import { MatDivider } from '@angular/material/divider';
+import { MatSelectionList, MatListOption } from '@angular/material/list';
+import { MatAnchor } from "@angular/material/button";
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-filters-dialog',
+  imports: [
+    MatDivider,
+    MatSelectionList,
+    MatListOption,
+    MatAnchor,
+    FormsModule
+],
+  templateUrl: './filters-dialog.html',
+  styleUrl: './filters-dialog.scss',
+})
+export class FiltersDialog {
+  shopService = inject(ShopService)
+  private dialogRef = inject(MatDialogRef<FiltersDialog>)
+  data = inject(MAT_DIALOG_DATA)
+
+  selectedBrands: string[] = this.data.selectedBrands
+  selectedTypes: string[] = this.data.selectedTypes
+
+  applyFilters() {
+    this.dialogRef.close({
+      selectedBrands: this.selectedBrands,
+      selectedTypes: this.selectedTypes
+    })
+  }
+}
